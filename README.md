@@ -1,5 +1,8 @@
 # qiime2 environment files
 
+[![Build Status](https://travis-ci.org/biocore/qiiem2-environment-files.svg?branch=master)](https://travis-ci.org/mortonjt-qiime2-environment-files)
+
+
 This is a repository of extended environment, enabling other tools in qiime2 library to be bundled with the qiime2 install.
 See [qiime2 environment files](https://github.com/qiime2/environment-files).
 
