@@ -1,0 +1,28 @@
+# Travis yml file inspired by scikit-bio
+# Check on http://lint.travis-ci.org/ after modifying it!
+sudo: false
+language: python
+env:
+  - PYVERSION=3.6
+os:
+  - linux
+  - osx
+before_install:
+  - export MPLBACKEND='Agg'
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh; fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda update --yes conda
+install:
+  - wget -q
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget https://raw.githubusercontent.com/mortonjt/qiime2-environment-files/master/envs/2019.7/qiime2-2019.7-plus-py36-linux-conda.yml -O env.yml; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget https://raw.githubusercontent.com/mortonjt/qiime2-environment-files/master/envs/2019.7/qiime2-2019.7-plus-py36-osx-conda.yml -O env.yml; fi
+  - conda env create -q -n test_env --file env.yml
+  - source activate test_env
+script:
+  - qiime
+notifications:
+  webhooks:
+    on_success: change
+    on_failure: always
